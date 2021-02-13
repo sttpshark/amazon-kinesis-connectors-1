@@ -16,10 +16,10 @@ import org.apache.commons.logging.LogFactory;
 
 import samples.utils.CloudFormationUtils;
 import samples.utils.DynamoDBUtils;
-import samples.utils.EC2Utils;
+// import samples.utils.EC2Utils;
 import samples.utils.KinesisUtils;
-import samples.utils.RedshiftUtils;
-import samples.utils.S3Utils;
+// import samples.utils.RedshiftUtils;
+// import samples.utils.S3Utils;
 
 import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
@@ -27,12 +27,12 @@ import com.amazonaws.regions.RegionUtils;
 import com.amazonaws.services.cloudformation.AmazonCloudFormation;
 import com.amazonaws.services.cloudformation.AmazonCloudFormationClient;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
-import com.amazonaws.services.ec2.AmazonEC2;
-import com.amazonaws.services.ec2.AmazonEC2Client;
+// import com.amazonaws.services.ec2.AmazonEC2;
+// import com.amazonaws.services.ec2.AmazonEC2Client;
 import com.amazonaws.services.kinesis.connectors.KinesisConnectorConfiguration;
 import com.amazonaws.services.kinesis.connectors.KinesisConnectorExecutorBase;
-import com.amazonaws.services.redshift.AmazonRedshiftClient;
-import com.amazonaws.services.s3.AmazonS3Client;
+// import com.amazonaws.services.redshift.AmazonRedshiftClient;
+// import com.amazonaws.services.s3.AmazonS3Client;
 
 /**
  * This class defines the execution of a Amazon Kinesis Connector.
@@ -46,11 +46,11 @@ public abstract class KinesisConnectorExecutor<T, U> extends KinesisConnectorExe
     private static final String CREATE_KINESIS_INPUT_STREAM = "createKinesisInputStream";
     private static final String CREATE_KINESIS_OUTPUT_STREAM = "createKinesisOutputStream";
     private static final String CREATE_DYNAMODB_DATA_TABLE = "createDynamoDBDataTable";
-    private static final String CREATE_REDSHIFT_CLUSTER = "createRedshiftCluster";
-    private static final String CREATE_REDSHIFT_DATA_TABLE = "createRedshiftDataTable";
-    private static final String CREATE_REDSHIFT_FILE_TABLE = "createRedshiftFileTable";
-    private static final String CREATE_S3_BUCKET = "createS3Bucket";
-    private static final String CREATE_ELASTICSEARCH_CLUSTER = "createElasticsearchCluster";
+    // private static final String CREATE_REDSHIFT_CLUSTER = "createRedshiftCluster";
+    // private static final String CREATE_REDSHIFT_DATA_TABLE = "createRedshiftDataTable";
+    // private static final String CREATE_REDSHIFT_FILE_TABLE = "createRedshiftFileTable";
+    // private static final String CREATE_S3_BUCKET = "createS3Bucket";
+    // private static final String CREATE_ELASTICSEARCH_CLUSTER = "createElasticsearchCluster";
     private static final boolean DEFAULT_CREATE_RESOURCES = false;
 
     // Create Amazon DynamoDB Resource constants
@@ -60,18 +60,18 @@ public abstract class KinesisConnectorExecutor<T, U> extends KinesisConnectorExe
     private static final Long DEFAULT_DYNAMODB_READ_CAPACITY_UNITS = 1l;
     private static final Long DEFAULT_DYNAMODB_WRITE_CAPACITY_UNITS = 1l;
     // Create Amazon Redshift Resource constants
-    private static final String REDSHIFT_CLUSTER_IDENTIFIER = "redshiftClusterIdentifier";
-    private static final String REDSHIFT_DATABASE_NAME = "redshiftDatabaseName";
-    private static final String REDSHIFT_CLUSTER_TYPE = "redshiftClusterType";
-    private static final String REDSHIFT_NUMBER_OF_NODES = "redshiftNumberOfNodes";
-    private static final int DEFAULT_REDSHIFT_NUMBER_OF_NODES = 2;
+    // private static final String REDSHIFT_CLUSTER_IDENTIFIER = "redshiftClusterIdentifier";
+    // private static final String REDSHIFT_DATABASE_NAME = "redshiftDatabaseName";
+    // private static final String REDSHIFT_CLUSTER_TYPE = "redshiftClusterType";
+    // private static final String REDSHIFT_NUMBER_OF_NODES = "redshiftNumberOfNodes";
+    // private static final int DEFAULT_REDSHIFT_NUMBER_OF_NODES = 2;
 
     // Create Amazon S3 Resource constants
-    private static final String S3_BUCKET = "s3Bucket";
+    // private static final String S3_BUCKET = "s3Bucket";
 
     // Elasticsearch Cluster Resource constants
-    private static final String EC2_ELASTICSEARCH_FILTER_NAME = "tag:type";
-    private static final String EC2_ELASTICSEARCH_FILTER_VALUE = "elasticsearch";
+    // private static final String EC2_ELASTICSEARCH_FILTER_NAME = "tag:type";
+    // private static final String EC2_ELASTICSEARCH_FILTER_VALUE = "elasticsearch";
 
     // Create Stream Source constants
     private static final String CREATE_STREAM_SOURCE = "createStreamSource";
@@ -147,30 +147,30 @@ public abstract class KinesisConnectorExecutor<T, U> extends KinesisConnectorExe
             createDynamoDBTable(key, readCapacityUnits, writeCapacityUnits);
         }
 
-        if (parseBoolean(CREATE_REDSHIFT_CLUSTER, DEFAULT_CREATE_RESOURCES, properties)) {
-            String clusterIdentifier = properties.getProperty(REDSHIFT_CLUSTER_IDENTIFIER);
-            String databaseName = properties.getProperty(REDSHIFT_DATABASE_NAME);
-            String clusterType = properties.getProperty(REDSHIFT_CLUSTER_TYPE);
-            int numberOfNodes = parseInt(REDSHIFT_NUMBER_OF_NODES, DEFAULT_REDSHIFT_NUMBER_OF_NODES, properties);
-            createRedshiftCluster(clusterIdentifier, databaseName, clusterType, numberOfNodes);
-        }
+        // if (parseBoolean(CREATE_REDSHIFT_CLUSTER, DEFAULT_CREATE_RESOURCES, properties)) {
+        //     String clusterIdentifier = properties.getProperty(REDSHIFT_CLUSTER_IDENTIFIER);
+        //     String databaseName = properties.getProperty(REDSHIFT_DATABASE_NAME);
+        //     String clusterType = properties.getProperty(REDSHIFT_CLUSTER_TYPE);
+        //     int numberOfNodes = parseInt(REDSHIFT_NUMBER_OF_NODES, DEFAULT_REDSHIFT_NUMBER_OF_NODES, properties);
+        //     createRedshiftCluster(clusterIdentifier, databaseName, clusterType, numberOfNodes);
+        // }
 
-        if (parseBoolean(CREATE_REDSHIFT_DATA_TABLE, DEFAULT_CREATE_RESOURCES, properties)) {
-            createRedshiftDataTable();
-        }
+        // if (parseBoolean(CREATE_REDSHIFT_DATA_TABLE, DEFAULT_CREATE_RESOURCES, properties)) {
+        //     createRedshiftDataTable();
+        // }
 
-        if (parseBoolean(CREATE_REDSHIFT_FILE_TABLE, DEFAULT_CREATE_RESOURCES, properties)) {
-            createRedshiftFileTable();
-        }
+        // if (parseBoolean(CREATE_REDSHIFT_FILE_TABLE, DEFAULT_CREATE_RESOURCES, properties)) {
+        //     createRedshiftFileTable();
+        // }
 
-        if (parseBoolean(CREATE_S3_BUCKET, DEFAULT_CREATE_RESOURCES, properties)) {
-            String s3Bucket = properties.getProperty(S3_BUCKET);
-            createS3Bucket(s3Bucket);
-        }
+        // if (parseBoolean(CREATE_S3_BUCKET, DEFAULT_CREATE_RESOURCES, properties)) {
+        //     String s3Bucket = properties.getProperty(S3_BUCKET);
+        //     createS3Bucket(s3Bucket);
+        // }
 
-        if (parseBoolean(CREATE_ELASTICSEARCH_CLUSTER, DEFAULT_CREATE_RESOURCES, properties)) {
-            createElasticsearchCluster();
-        }
+        // if (parseBoolean(CREATE_ELASTICSEARCH_CLUSTER, DEFAULT_CREATE_RESOURCES, properties)) {
+        //     createElasticsearchCluster();
+        // }
     }
 
     /**
@@ -231,107 +231,107 @@ public abstract class KinesisConnectorExecutor<T, U> extends KinesisConnectorExe
      * @param numberOfNodes
      *        Number of nodes for the Amazon Redshift cluster
      */
-    private void createRedshiftCluster(String clusterIdentifier,
-            String databaseName,
-            String clusterType,
-            int numberOfNodes) {
-        // Make sure the Amazon Redshift cluster is available
-        AmazonRedshiftClient redshiftClient = new AmazonRedshiftClient(config.AWS_CREDENTIALS_PROVIDER);
-        redshiftClient.setEndpoint(config.REDSHIFT_ENDPOINT);
-        LOG.info("Creating Amazon Redshift cluster " + clusterIdentifier);
-        RedshiftUtils.createCluster(redshiftClient,
-                clusterIdentifier,
-                databaseName,
-                config.REDSHIFT_USERNAME,
-                config.REDSHIFT_PASSWORD,
-                clusterType,
-                numberOfNodes);
+    // private void createRedshiftCluster(String clusterIdentifier,
+    //         String databaseName,
+    //         String clusterType,
+    //         int numberOfNodes) {
+    //     // Make sure the Amazon Redshift cluster is available
+    //     AmazonRedshiftClient redshiftClient = new AmazonRedshiftClient(config.AWS_CREDENTIALS_PROVIDER);
+    //     redshiftClient.setEndpoint(config.REDSHIFT_ENDPOINT);
+    //     LOG.info("Creating Amazon Redshift cluster " + clusterIdentifier);
+    //     RedshiftUtils.createCluster(redshiftClient,
+    //             clusterIdentifier,
+    //             databaseName,
+    //             config.REDSHIFT_USERNAME,
+    //             config.REDSHIFT_PASSWORD,
+    //             clusterType,
+    //             numberOfNodes);
 
-        // Update the Amazon Redshift connection url
-        config.REDSHIFT_URL = RedshiftUtils.getClusterURL(redshiftClient, clusterIdentifier);
-    }
+    //     // Update the Amazon Redshift connection url
+    //     config.REDSHIFT_URL = RedshiftUtils.getClusterURL(redshiftClient, clusterIdentifier);
+    // }
 
     /**
      * Helper method to create the data table in Amazon Redshift.
      */
-    private void createRedshiftDataTable() {
-        Properties p = new Properties();
-        p.setProperty("user", config.REDSHIFT_USERNAME);
-        p.setProperty("password", config.REDSHIFT_PASSWORD);
-        if (RedshiftUtils.tableExists(p, config.REDSHIFT_URL, config.REDSHIFT_DATA_TABLE)) {
-            LOG.info("Amazon Redshift data table " + config.REDSHIFT_DATA_TABLE + " exists.");
-            return;
-        }
-        try {
-            LOG.info("Creating Amazon Redshift data table " + config.REDSHIFT_DATA_TABLE);
-            RedshiftUtils.createRedshiftTable(config.REDSHIFT_URL,
-                    p,
-                    config.REDSHIFT_DATA_TABLE,
-                    getKinesisMessageModelFields());
-        } catch (SQLException e) {
-            String msg = "Could not create Amazon Redshift data table " + config.REDSHIFT_DATA_TABLE;
-            throw new IllegalStateException(msg, e);
-        }
-    }
+    // private void createRedshiftDataTable() {
+    //     Properties p = new Properties();
+    //     p.setProperty("user", config.REDSHIFT_USERNAME);
+    //     p.setProperty("password", config.REDSHIFT_PASSWORD);
+    //     if (RedshiftUtils.tableExists(p, config.REDSHIFT_URL, config.REDSHIFT_DATA_TABLE)) {
+    //         LOG.info("Amazon Redshift data table " + config.REDSHIFT_DATA_TABLE + " exists.");
+    //         return;
+    //     }
+    //     try {
+    //         LOG.info("Creating Amazon Redshift data table " + config.REDSHIFT_DATA_TABLE);
+    //         RedshiftUtils.createRedshiftTable(config.REDSHIFT_URL,
+    //                 p,
+    //                 config.REDSHIFT_DATA_TABLE,
+    //                 getKinesisMessageModelFields());
+    //     } catch (SQLException e) {
+    //         String msg = "Could not create Amazon Redshift data table " + config.REDSHIFT_DATA_TABLE;
+    //         throw new IllegalStateException(msg, e);
+    //     }
+    // }
 
     /**
      * Helper method to create the file table in Amazon Redshift.
      */
-    private void createRedshiftFileTable() {
-        Properties p = new Properties();
-        p.setProperty("user", config.REDSHIFT_USERNAME);
-        p.setProperty("password", config.REDSHIFT_PASSWORD);
-        if (RedshiftUtils.tableExists(p, config.REDSHIFT_URL, config.REDSHIFT_FILE_TABLE)) {
-            LOG.info("Amazon Redshift file table " + config.REDSHIFT_FILE_TABLE + " exists.");
-            return;
-        }
-        try {
-            LOG.info("Creating Amazon Redshift file table " + config.REDSHIFT_FILE_TABLE);
-            RedshiftUtils.createRedshiftTable(config.REDSHIFT_URL, p, config.REDSHIFT_FILE_TABLE, getFileTableFields());
-        } catch (SQLException e) {
-            String msg = "Could not create Amazon Redshift file table " + config.REDSHIFT_FILE_TABLE;
-            throw new IllegalStateException(msg, e);
-        }
-    }
+    // private void createRedshiftFileTable() {
+    //     Properties p = new Properties();
+    //     p.setProperty("user", config.REDSHIFT_USERNAME);
+    //     p.setProperty("password", config.REDSHIFT_PASSWORD);
+    //     if (RedshiftUtils.tableExists(p, config.REDSHIFT_URL, config.REDSHIFT_FILE_TABLE)) {
+    //         LOG.info("Amazon Redshift file table " + config.REDSHIFT_FILE_TABLE + " exists.");
+    //         return;
+    //     }
+    //     try {
+    //         LOG.info("Creating Amazon Redshift file table " + config.REDSHIFT_FILE_TABLE);
+    //         RedshiftUtils.createRedshiftTable(config.REDSHIFT_URL, p, config.REDSHIFT_FILE_TABLE, getFileTableFields());
+    //     } catch (SQLException e) {
+    //         String msg = "Could not create Amazon Redshift file table " + config.REDSHIFT_FILE_TABLE;
+    //         throw new IllegalStateException(msg, e);
+    //     }
+    // }
 
     /**
      * Helper method to build the data table.
      * 
      * @return Fields for the data table
      */
-    private static List<String> getKinesisMessageModelFields() {
-        List<String> fields = new ArrayList<String>();
-        fields.add("userid integer not null distkey sortkey");
-        fields.add("username char(8)");
-        fields.add("firstname varchar(30)");
-        fields.add("lastname varchar(30)");
-        fields.add("city varchar(30)");
-        fields.add("state char(2)");
-        fields.add("email varchar(100)");
-        fields.add("phone char(14)");
-        fields.add("likesports boolean");
-        fields.add("liketheatre boolean");
-        fields.add("likeconcerts boolean");
-        fields.add("likejazz boolean");
-        fields.add("likeclassical boolean");
-        fields.add("likeopera boolean");
-        fields.add("likerock boolean");
-        fields.add("likevegas boolean");
-        fields.add("likebroadway boolean");
-        fields.add("likemusicals boolean");
-        return fields;
-    }
+    // private static List<String> getKinesisMessageModelFields() {
+    //     List<String> fields = new ArrayList<String>();
+    //     fields.add("userid integer not null distkey sortkey");
+    //     fields.add("username char(8)");
+    //     fields.add("firstname varchar(30)");
+    //     fields.add("lastname varchar(30)");
+    //     fields.add("city varchar(30)");
+    //     fields.add("state char(2)");
+    //     fields.add("email varchar(100)");
+    //     fields.add("phone char(14)");
+    //     fields.add("likesports boolean");
+    //     fields.add("liketheatre boolean");
+    //     fields.add("likeconcerts boolean");
+    //     fields.add("likejazz boolean");
+    //     fields.add("likeclassical boolean");
+    //     fields.add("likeopera boolean");
+    //     fields.add("likerock boolean");
+    //     fields.add("likevegas boolean");
+    //     fields.add("likebroadway boolean");
+    //     fields.add("likemusicals boolean");
+    //     return fields;
+    // }
 
     /**
      * Helper method to help create the file table.
      * 
      * @return File table fields
      */
-    private List<String> getFileTableFields() {
-        List<String> fields = new ArrayList<String>();
-        fields.add(config.REDSHIFT_FILE_KEY_COLUMN + " varchar(255) primary key");
-        return fields;
-    }
+    // private List<String> getFileTableFields() {
+    //     List<String> fields = new ArrayList<String>();
+    //     fields.add(config.REDSHIFT_FILE_KEY_COLUMN + " varchar(255) primary key");
+    //     return fields;
+    // }
 
     /**
      * Helper method to create the Amazon S3 bucket.
@@ -339,33 +339,33 @@ public abstract class KinesisConnectorExecutor<T, U> extends KinesisConnectorExe
      * @param s3Bucket
      *        The name of the bucket to create
      */
-    private void createS3Bucket(String s3Bucket) {
-        AmazonS3Client client = new AmazonS3Client(config.AWS_CREDENTIALS_PROVIDER);
-        client.setEndpoint(config.S3_ENDPOINT);
-        LOG.info("Creating Amazon S3 bucket " + s3Bucket);
-        S3Utils.createBucket(client, s3Bucket);
-    }
+    // private void createS3Bucket(String s3Bucket) {
+    //     AmazonS3Client client = new AmazonS3Client(config.AWS_CREDENTIALS_PROVIDER);
+    //     client.setEndpoint(config.S3_ENDPOINT);
+    //     LOG.info("Creating Amazon S3 bucket " + s3Bucket);
+    //     S3Utils.createBucket(client, s3Bucket);
+    // }
 
     /**
      * Helper method to create Elasticsearch cluster at set correct endpoint.
      */
-    private void createElasticsearchCluster() {
-        // Create stack if not already up
-        AmazonCloudFormation cloudFormationClient = new AmazonCloudFormationClient(config.AWS_CREDENTIALS_PROVIDER);
-        cloudFormationClient.setRegion(RegionUtils.getRegion(config.REGION_NAME));
-        CloudFormationUtils.createStackIfNotExists(cloudFormationClient, config);
+    // private void createElasticsearchCluster() {
+    //     // Create stack if not already up
+    //     AmazonCloudFormation cloudFormationClient = new AmazonCloudFormationClient(config.AWS_CREDENTIALS_PROVIDER);
+    //     cloudFormationClient.setRegion(RegionUtils.getRegion(config.REGION_NAME));
+    //     CloudFormationUtils.createStackIfNotExists(cloudFormationClient, config);
 
-        // Update the elasticsearch endpoint to use endpoint in created cluster
-        AmazonEC2 ec2Client = new AmazonEC2Client(config.AWS_CREDENTIALS_PROVIDER);
-        ec2Client.setRegion(RegionUtils.getRegion(config.REGION_NAME));
-        config.ELASTICSEARCH_ENDPOINT =
-                EC2Utils.getEndpointForFirstActiveInstanceWithTag(ec2Client,
-                        EC2_ELASTICSEARCH_FILTER_NAME,
-                        EC2_ELASTICSEARCH_FILTER_VALUE);
-        if (config.ELASTICSEARCH_ENDPOINT == null || config.ELASTICSEARCH_ENDPOINT.isEmpty()) {
-            throw new RuntimeException("Could not find active Elasticsearch endpoint from cluster.");
-        }
-    }
+    //     // Update the elasticsearch endpoint to use endpoint in created cluster
+    //     AmazonEC2 ec2Client = new AmazonEC2Client(config.AWS_CREDENTIALS_PROVIDER);
+    //     ec2Client.setRegion(RegionUtils.getRegion(config.REGION_NAME));
+    //     config.ELASTICSEARCH_ENDPOINT =
+    //             EC2Utils.getEndpointForFirstActiveInstanceWithTag(ec2Client,
+    //                     EC2_ELASTICSEARCH_FILTER_NAME,
+    //                     EC2_ELASTICSEARCH_FILTER_VALUE);
+    //     if (config.ELASTICSEARCH_ENDPOINT == null || config.ELASTICSEARCH_ENDPOINT.isEmpty()) {
+    //         throw new RuntimeException("Could not find active Elasticsearch endpoint from cluster.");
+    //     }
+    // }
 
     /**
      * Helper method used to parse boolean properties.
@@ -408,7 +408,7 @@ public abstract class KinesisConnectorExecutor<T, U> extends KinesisConnectorExe
      *        The properties file to get property from
      * @return property from property file, or if it is not specified, the default value
      */
-    private static int parseInt(String property, int defaultValue, Properties properties) {
-        return Integer.parseInt(properties.getProperty(property, Integer.toString(defaultValue)));
-    }
+    // private static int parseInt(String property, int defaultValue, Properties properties) {
+    //     return Integer.parseInt(properties.getProperty(property, Integer.toString(defaultValue)));
+    // }
 }
