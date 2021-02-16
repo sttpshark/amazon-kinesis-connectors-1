@@ -107,7 +107,7 @@ public abstract class KinesisConnectorExecutor<T, U> extends KinesisConnectorExe
         }
         this.config = new KinesisConnectorConfiguration(properties, getAWSCredentialsProvider());
         setupAWSResources();
-        setupInputStream();
+        //setupInputStream();
 
         // Initialize executor with configurations
         super.initialize(config);
@@ -176,27 +176,27 @@ public abstract class KinesisConnectorExecutor<T, U> extends KinesisConnectorExe
     /**
      * Helper method to spawn the {@link StreamSource} in a separate thread.
      */
-    private void setupInputStream() {
-        if (parseBoolean(CREATE_STREAM_SOURCE, DEFAULT_CREATE_STREAM_SOURCE, properties)) {
-            String inputFile = properties.getProperty(INPUT_STREAM_FILE);
-            StreamSource streamSource;
-            if (config.BATCH_RECORDS_IN_PUT_REQUEST) {
-                streamSource =
-                        new BatchedStreamSource(config, inputFile, parseBoolean(LOOP_OVER_STREAM_SOURCE,
-                                DEFAULT_LOOP_OVER_STREAM_SOURCE,
-                                properties));
+    // private void setupInputStream() {
+    //     if (parseBoolean(CREATE_STREAM_SOURCE, DEFAULT_CREATE_STREAM_SOURCE, properties)) {
+    //         String inputFile = properties.getProperty(INPUT_STREAM_FILE);
+    //         StreamSource streamSource;
+    //         if (config.BATCH_RECORDS_IN_PUT_REQUEST) {
+    //             streamSource =
+    //                     new BatchedStreamSource(config, inputFile, parseBoolean(LOOP_OVER_STREAM_SOURCE,
+    //                             DEFAULT_LOOP_OVER_STREAM_SOURCE,
+    //                             properties));
 
-            } else {
-                streamSource =
-                        new StreamSource(config, inputFile, parseBoolean(LOOP_OVER_STREAM_SOURCE,
-                                DEFAULT_LOOP_OVER_STREAM_SOURCE,
-                                properties));
-            }
-            Thread streamSourceThread = new Thread(streamSource);
-            LOG.info("Starting stream source.");
-            streamSourceThread.start();
-        }
-    }
+    //         } else {
+    //             streamSource =
+    //                     new StreamSource(config, inputFile, parseBoolean(LOOP_OVER_STREAM_SOURCE,
+    //                             DEFAULT_LOOP_OVER_STREAM_SOURCE,
+    //                             properties));
+    //         }
+    //         Thread streamSourceThread = new Thread(streamSource);
+    //         LOG.info("Starting stream source.");
+    //         streamSourceThread.start();
+    //     }
+    // }
 
     /**
      * Helper method to create the Amazon DynamoDB table.

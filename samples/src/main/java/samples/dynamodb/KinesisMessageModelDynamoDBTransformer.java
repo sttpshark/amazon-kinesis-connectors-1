@@ -31,10 +31,11 @@ public class KinesisMessageModelDynamoDBTransformer extends
     @Override
     public Map<String, AttributeValue> fromClass(KinesisMessageModel message) {
         Map<String, AttributeValue> item = new HashMap<String, AttributeValue>();
-        putIntegerIfNonempty(item, "user_id", message.userid);
-        putStringIfNonempty(item, "username", message.username);
-        putStringIfNonempty(item, "firstname", message.firstname);
-        putStringIfNonempty(item, "lastname", message.lastname);
+        putStringIfNonempty(item, "key", message.key);
+        // putIntegerIfNonempty(item, "user_id", message.userid);
+        // putStringIfNonempty(item, "username", message.username);
+        // putStringIfNonempty(item, "firstname", message.firstname);
+        // putStringIfNonempty(item, "lastname", message.lastname);
         // putStringIfNonempty(item, "city", message.city);
         // putStringIfNonempty(item, "state", message.state);
         // putStringIfNonempty(item, "email", message.email);

@@ -114,7 +114,7 @@ public class StreamSource implements Runnable {
                 PutRecordRequest putRecordRequest = new PutRecordRequest();
                 putRecordRequest.setStreamName(config.KINESIS_INPUT_STREAM);
                 putRecordRequest.setData(ByteBuffer.wrap(line.getBytes()));
-                putRecordRequest.setPartitionKey(Integer.toString(kinesisMessageModel.getUserid()));
+                putRecordRequest.setPartitionKey(kinesisMessageModel.getKey());
                 kinesisClient.putRecord(putRecordRequest);
                 lines++;
             }
