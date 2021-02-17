@@ -15,8 +15,5 @@ Require-Bundle: org.apache.commons.codec;bundle-version="1.6",
  com.amazonaws.sdk;bundle-version="1.9.37",
 Export-Package: com.amazonaws.services.kinesis.connectors,
  com.amazonaws.services.kinesis.connectors.dynamodb,
- com.amazonaws.services.kinesis.connectors.elasticsearch,
  com.amazonaws.services.kinesis.connectors.impl,
- com.amazonaws.services.kinesis.connectors.interfaces,
- com.amazonaws.services.kinesis.connectors.redshift,
- com.amazonaws.services.kinesis.connectors.s3
+ com.amazonaws.services.kinesis.connectors.interfaces

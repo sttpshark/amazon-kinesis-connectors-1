@@ -46,11 +46,6 @@
       <version>9.3-1101-jdbc41</version>
     </dependency>
     <dependency>
-      <groupId>org.elasticsearch</groupId>
-      <artifactId>elasticsearch</artifactId>
-      <version>1.2.1</version>
-    </dependency>
-    <dependency>
       <groupId>org.apache.lucene</groupId>
       <artifactId>lucene-core</artifactId>
       <version>7.1.0</version>
@@ -94,22 +89,6 @@
             <program>
               <mainClass>samples.dynamodb.DynamoDBExecutor</mainClass>
               <id>dynamodb-sample</id>
-            </program>
-            <program>
-              <mainClass>samples.s3.S3Executor</mainClass>
-              <id>s3-sample</id>
-            </program>
-            <program>
-              <mainClass>samples.elasticsearch.ElasticsearchExecutor</mainClass>
-              <id>elastic-search-sample</id>
-            </program>
-            <program>
-              <mainClass>samples.redshiftbasic.RedshiftBasicExecutor</mainClass>
-              <id>redshift-basic-sample</id>
-            </program>
-            <program>
-              <mainClass>samples.redshiftmanifest.RedshiftManifestExecutor</mainClass>
-              <id>redshift-manifest-sample</id>
             </program>
           </programs>
         </configuration>
