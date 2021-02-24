@@ -16,11 +16,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class KinesisMessageModel implements Serializable {
 
-    // public int userid;
-    // public String username;
-    // public String firstname;
-    // public String lastname;
-    public String key;
+    public int ID;
+    public String Date;
+    public String Time;
+    public String Status;
+    public String Frequency;
 
     /**
      * Default constructor for Jackson JSON mapper - uses bean pattern.
@@ -31,25 +31,23 @@ public class KinesisMessageModel implements Serializable {
 
     /*
      * 
-     * @param userid
-     *        Sample int data field
-     * @param username
-     *        Sample String data field
-     * @param firstname
-     *        Sample String data field
-     * @param lastname
-     *        Sample String data field
+     * @param ID
+     *        Sample int ID field
+     * @param Date
+     *        Sample String Date field
+     * @param Time
+     *        Sample String Time field
      **/
-    public KinesisMessageModel(/*int userid,*/
-            /*String username,*/
-            /*String firstname,*/
-            /*String lastname)*/ 
-            String key) {
-        // this.userid = userid;
-        // this.username = username;
-        // this.firstname = firstname;
-        // this.lastname = lastname;
-        this.key = key;
+    public KinesisMessageModel(int ID,
+            String Date,
+            String Time,
+            String Status,
+            String Frequency) {
+        this.ID = ID;
+        this.Date = Date;
+        this.Time = Time;
+        this.Status = Status;
+        this.Frequency = Frequency;
     }
 
     @Override
@@ -62,87 +60,66 @@ public class KinesisMessageModel implements Serializable {
     }
 
     /**
-     * Getter for userid
+     * Getter for ID
      * 
-     * @return userid
+     * @return ID
      */
-    // public int getUserid() {
-    //     return userid;
-    // }
 
-    /**
-     * Setter for userid
-     * 
-     * @param userid
-     *        Value for userid
-     */
-    // public void setUserid(int userid) {
-    //     this.userid = userid;
-    // }
-
-    /**
-     * Getter for username
-     * 
-     * @return username
-     */
-    // public String getUsername() {
-    //     return username;
-    // }
-
-    /**
-     * Setter for username
-     * 
-     * @param username
-     *        Value for username
-     */
-    // public void setUsername(String username) {
-    //     this.username = username;
-    // }
-
-    /**
-     * Getter for firstname
-     * 
-     * @return firstname
-     */
-    // public String getFirstname() {
-    //     return firstname;
-    // }
-
-    /**
-     * Setter for firstname
-     * 
-     * @param firstname
-     *        Value for firstname
-     */
-    // public void setFirstname(String firstname) {
-    //     this.firstname = firstname;
-    // }
-
-    /**
-     * Getter for lastname
-     * 
-     * @return lastname
-     */
-    // public String getLastname() {
-    //     return lastname;
-    // }
-
-    /**
-     * Setter for lastname
-     * 
-     * @param lastname
-     *        Value for lastname
-     */
-    // public void setLastname(String lastname) {
-    //     this.lastname = lastname;
-    // }
-
-    public String getKey() {
-        return key;
+    public int getID() {
+        return ID;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    /**
+     * Setter for ID
+     * 
+     * @param ID
+     *        Value for ID
+     */
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    /**
+     * Getter for Date
+     * 
+     * @return Date
+     */
+
+    public String getDate() {
+        return Date;
+    }
+
+    /**
+     * Setter for Date
+     * 
+     * @param Date
+     *        Value for Date
+     */
+
+    public void setDate(String Date) {
+        this.Date = Date;
+    }
+
+    /**
+     * Getter for Time
+     * 
+     * @return Time
+     */
+
+    public String getTime() {
+        return Time;
+    }
+
+    /**
+     * Setter for Time
+     * 
+     * @param Time
+     *        Value for Time
+     */
+
+    public void setTime(String Time) {
+        this.Time = Time;
     }
 
     @Override
@@ -153,7 +130,9 @@ public class KinesisMessageModel implements Serializable {
         // result = prime * result + ((lastname == null) ? 0 : lastname.hashCode());
         // result = prime * result + userid;
         // result = prime * result + ((username == null) ? 0 : username.hashCode());
-        result = prime * result + ((key == null) ? 0 : key.hashCode());
+        result = prime * result + ID;
+        result = prime * result + ((Date == null) ? 0 : Date.hashCode());
+        result = prime * result + ((Time == null) ? 0 : Time.hashCode());
         return result;
     }
 
@@ -193,9 +172,9 @@ public class KinesisMessageModel implements Serializable {
         // } else if (!username.equals(other.username)) {
         //     return false;
         // }
-        if (key != other.key) {
-            return false;
-        }
+        // if (key != other.key) {
+        //     return false;
+        // }
         return true;
     }
 }

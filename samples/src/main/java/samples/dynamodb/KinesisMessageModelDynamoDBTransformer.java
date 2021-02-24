@@ -6,6 +6,9 @@ package samples.dynamodb;
 
 import java.util.HashMap;
 import java.util.Map;
+// import org.apache.commons.lang3.StringUtils;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import samples.KinesisMessageModel;
 
@@ -31,7 +34,12 @@ public class KinesisMessageModelDynamoDBTransformer extends
     @Override
     public Map<String, AttributeValue> fromClass(KinesisMessageModel message) {
         Map<String, AttributeValue> item = new HashMap<String, AttributeValue>();
-        putStringIfNonempty(item, "key", message.key);
+        putIntegerIfNonempty(item, "pmuID", message.ID);
+        // putStringIfNonempty(item, "Date", message.Date);
+        // putStringIfNonempty(item, "Time", message.Time);
+        putStringIfNonempty(item, "ts", getTimeStamp(message.Date + ' ' + message.Time));
+        putStringIfNonempty(item, "Status", message.Status);
+        putStringIfNonempty(item, "Frequency", message.Frequency);
         // putIntegerIfNonempty(item, "user_id", message.userid);
         // putStringIfNonempty(item, "username", message.username);
         // putStringIfNonempty(item, "firstname", message.firstname);
@@ -87,4 +95,21 @@ public class KinesisMessageModelDynamoDBTransformer extends
     private void putIntegerIfNonempty(Map<String, AttributeValue> item, String key, Integer value) {
         putStringIfNonempty(item, key, Integer.toString(value));
     }
+
+    private String getTimeStamp(String input) {
+        // String inputnew = StringUtil.replaceAll(input, "/", "-");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS zzz");
+        String timestamp = null;
+        try {
+            Date date = format.parse(input + " UTC");
+            System.out.println(date);
+            timestamp = String.valueOf(date.getTime());
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
+       // call it like this:  getTimeStamp( "2020-05-27 10:10:10.100");
+        return timestamp;
+    }
+    
 }
