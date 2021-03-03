@@ -6,15 +6,20 @@ package samples.dynamodb;
 
 import java.util.HashMap;
 import java.util.Map;
-// import org.apache.commons.lang3.StringUtils;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 
 import samples.KinesisMessageModel;
 
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.kinesis.connectors.BasicJsonTransformer;
 import com.amazonaws.services.kinesis.connectors.dynamodb.DynamoDBTransformer;
+// import org.json.simple.JSONObject;
+// import org.json.simple.parser.JSONParser;
+import org.json.JSONObject;
+// import org.json.JSONArray;
+// import java.lang.String;
 
 /**
  * A custom transfomer for {@link KinesisMessageModel} records in JSON format. The output is in a format
@@ -35,29 +40,14 @@ public class KinesisMessageModelDynamoDBTransformer extends
     public Map<String, AttributeValue> fromClass(KinesisMessageModel message) {
         Map<String, AttributeValue> item = new HashMap<String, AttributeValue>();
         putIntegerIfNonempty(item, "pmuID", message.ID);
-        // putStringIfNonempty(item, "Date", message.Date);
-        // putStringIfNonempty(item, "Time", message.Time);
         putStringIfNonempty(item, "ts", getTimeStamp(message.Date + ' ' + message.Time));
         putStringIfNonempty(item, "Status", message.Status);
+        putStringIfNonempty(item, "gpsLock", message.gpsLock);
+        putStringIfNonempty(item, "error", message.error);
         putStringIfNonempty(item, "Frequency", message.Frequency);
-        // putIntegerIfNonempty(item, "user_id", message.userid);
-        // putStringIfNonempty(item, "username", message.username);
-        // putStringIfNonempty(item, "firstname", message.firstname);
-        // putStringIfNonempty(item, "lastname", message.lastname);
-        // putStringIfNonempty(item, "city", message.city);
-        // putStringIfNonempty(item, "state", message.state);
-        // putStringIfNonempty(item, "email", message.email);
-        // putStringIfNonempty(item, "phone", message.phone);
-        // putBoolIfNonempty(item, "likesports", message.likesports);
-        // putBoolIfNonempty(item, "liketheatre", message.liketheatre);
-        // putBoolIfNonempty(item, "likeconcerts", message.likeconcerts);
-        // putBoolIfNonempty(item, "likejazz", message.likejazz);
-        // putBoolIfNonempty(item, "likeclassical", message.likeclassical);
-        // putBoolIfNonempty(item, "likeopera", message.likeopera);
-        // putBoolIfNonempty(item, "likerock", message.likerock);
-        // putBoolIfNonempty(item, "likevegas", message.likevegas);
-        // putBoolIfNonempty(item, "likebroadway", message.likebroadway);
-        // putBoolIfNonempty(item, "likemusicals", message.likemusicals);
+        putStringIfNonempty(item, "sRate", message.sRate);
+        putStringIfNonempty(item, "dfdt", message.dfdt);
+        putDynamicIfNonempty(item, message.Phasors);
         return item;
     }
 
@@ -97,7 +87,6 @@ public class KinesisMessageModelDynamoDBTransformer extends
     }
 
     private String getTimeStamp(String input) {
-        // String inputnew = StringUtil.replaceAll(input, "/", "-");
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS zzz");
         String timestamp = null;
         try {
@@ -108,8 +97,20 @@ public class KinesisMessageModelDynamoDBTransformer extends
         catch (Exception e) {
             System.out.println(e);
         }
-       // call it like this:  getTimeStamp( "2020-05-27 10:10:10.100");
         return timestamp;
     }
+
+    private void putDynamicIfNonempty(Map<String, AttributeValue> item, String input) {
+        JSONObject obj1 = new JSONObject(input);
+        Iterator<String> keys= obj1.keys();
+        while (keys.hasNext()) 
+            {
+                String keyValue = (String)keys.next();
+                JSONObject obj2 = obj1.getJSONObject(keyValue);
+                String data = obj2.toString();
+                item.put(keyValue, new AttributeValue().withS(data));
+                //getting string values with keys- pageid and title
+            }
+        }
     
 }

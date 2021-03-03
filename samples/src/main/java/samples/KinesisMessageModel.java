@@ -20,7 +20,13 @@ public class KinesisMessageModel implements Serializable {
     public String Date;
     public String Time;
     public String Status;
+    public String gpsLock;
+    public String error;
     public String Frequency;
+    public String sRate;
+    public String dfdt;
+    public String Phasors;
+    
 
     /**
      * Default constructor for Jackson JSON mapper - uses bean pattern.
@@ -42,12 +48,22 @@ public class KinesisMessageModel implements Serializable {
             String Date,
             String Time,
             String Status,
-            String Frequency) {
+            String gpsLock,
+            String error,
+            String Frequency,
+            String sRate,
+            String Phasors,
+            String dfdt) {
         this.ID = ID;
         this.Date = Date;
         this.Time = Time;
         this.Status = Status;
+        this.gpsLock = gpsLock;
+        this.error = error;
         this.Frequency = Frequency;
+        this.sRate = sRate;
+        this.Phasors = Phasors;
+        this.dfdt = dfdt;
     }
 
     @Override
