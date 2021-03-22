@@ -16,16 +16,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class KinesisMessageModel implements Serializable {
 
-    public int ID;
-    public String Date;
-    public String Time;
-    public String Status;
+    public int pmuID;
+    public String ts;
+    public String status;
     public String gpsLock;
     public String error;
-    public String Frequency;
+    public String frequency;
     public String sRate;
     public String dfdt;
-    public String Phasors;
+    public String phasors;
     
 
     /**
@@ -44,26 +43,24 @@ public class KinesisMessageModel implements Serializable {
      * @param Time
      *        Sample String Time field
      **/
-    public KinesisMessageModel(int ID,
-            String Date,
-            String Time,
-            String Status,
+    public KinesisMessageModel(int pmuID,
+            String ts,
+            String status,
             String gpsLock,
-            String error,
-            String Frequency,
             String sRate,
-            String Phasors,
-            String dfdt) {
-        this.ID = ID;
-        this.Date = Date;
-        this.Time = Time;
-        this.Status = Status;
+            String error,
+            String frequency,
+            String dfdt,
+            String phasors) {
+        this.pmuID = pmuID;
+        this.ts = ts;
+        this.status = status;
         this.gpsLock = gpsLock;
-        this.error = error;
-        this.Frequency = Frequency;
         this.sRate = sRate;
-        this.Phasors = Phasors;
+        this.error = error;
+        this.frequency = frequency;
         this.dfdt = dfdt;
+        this.phasors = phasors;
     }
 
     @Override
@@ -82,7 +79,7 @@ public class KinesisMessageModel implements Serializable {
      */
 
     public int getID() {
-        return ID;
+        return pmuID;
     }
 
     /**
@@ -92,8 +89,8 @@ public class KinesisMessageModel implements Serializable {
      *        Value for ID
      */
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setID(int pmuID) {
+        this.pmuID = pmuID;
     }
 
     /**
@@ -102,41 +99,41 @@ public class KinesisMessageModel implements Serializable {
      * @return Date
      */
 
-    public String getDate() {
-        return Date;
-    }
+    // public String getDate() {
+    //     return Date;
+    // }
 
-    /**
-     * Setter for Date
-     * 
-     * @param Date
-     *        Value for Date
-     */
+    // /**
+    //  * Setter for Date
+    //  * 
+    //  * @param Date
+    //  *        Value for Date
+    //  */
 
-    public void setDate(String Date) {
-        this.Date = Date;
-    }
+    // public void setDate(String Date) {
+    //     this.Date = Date;
+    // }
 
-    /**
-     * Getter for Time
-     * 
-     * @return Time
-     */
+    // /**
+    //  * Getter for Time
+    //  * 
+    //  * @return Time
+    //  */
 
-    public String getTime() {
-        return Time;
-    }
+    // public String getTime() {
+    //     return Time;
+    // }
 
-    /**
-     * Setter for Time
-     * 
-     * @param Time
-     *        Value for Time
-     */
+    // /**
+    //  * Setter for Time
+    //  * 
+    //  * @param Time
+    //  *        Value for Time
+    //  */
 
-    public void setTime(String Time) {
-        this.Time = Time;
-    }
+    // public void setTime(String Time) {
+    //     this.Time = Time;
+    // }
 
     @Override
     public int hashCode() {
@@ -146,9 +143,8 @@ public class KinesisMessageModel implements Serializable {
         // result = prime * result + ((lastname == null) ? 0 : lastname.hashCode());
         // result = prime * result + userid;
         // result = prime * result + ((username == null) ? 0 : username.hashCode());
-        result = prime * result + ID;
-        result = prime * result + ((Date == null) ? 0 : Date.hashCode());
-        result = prime * result + ((Time == null) ? 0 : Time.hashCode());
+        result = prime * result + pmuID;
+        result = prime * result + ((ts == null) ? 0 : ts.hashCode());
         return result;
     }
 

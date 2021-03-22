@@ -39,15 +39,15 @@ public class KinesisMessageModelDynamoDBTransformer extends
     @Override
     public Map<String, AttributeValue> fromClass(KinesisMessageModel message) {
         Map<String, AttributeValue> item = new HashMap<String, AttributeValue>();
-        putIntegerIfNonempty(item, "pmuID", message.ID);
-        putStringIfNonempty(item, "ts", getTimeStamp(message.Date + ' ' + message.Time));
-        putStringIfNonempty(item, "Status", message.Status);
+        putIntegerIfNonempty(item, "pmuID", message.pmuID);
+        putStringIfNonempty(item, "ts", message.ts);
+        putStringIfNonempty(item, "status", message.status);
         putStringIfNonempty(item, "gpsLock", message.gpsLock);
-        putStringIfNonempty(item, "error", message.error);
-        putStringIfNonempty(item, "Frequency", message.Frequency);
         putStringIfNonempty(item, "sRate", message.sRate);
+        putStringIfNonempty(item, "error", message.error);
+        putStringIfNonempty(item, "frequency", message.frequency);
         putStringIfNonempty(item, "dfdt", message.dfdt);
-        putDynamicIfNonempty(item, message.Phasors);
+        putDynamicIfNonempty(item, message.phasors);
         return item;
     }
 
